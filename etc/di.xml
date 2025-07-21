@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Framework\View\Element\AbstractBlock">
+        <plugin name="networld_debug_block_comment"
+                type="Networld\Debug\Plugin\BlockComment"
+                sortOrder="10"/>
+    </type>
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="debug_hints" xsi:type="object">Networld\Debug\Console\Command\DebugHintsCommand</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Networld\Debug\Logger\OrderEmailLogger">
+        <arguments>
+            <argument name="name" xsi:type="string">debug_order_email</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="order_email" xsi:type="object">Networld\Debug\Logger\Handler\OrderEmail</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Networld\Debug\Logger\Handler\OrderEmail">
+        <arguments>
+            <argument name="fileName" xsi:type="string">var/log/debug_order_email.log</argument>
+            <argument name="loggerType" xsi:type="const">Monolog\Logger::DEBUG</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Email\Model\Transport">
+        <plugin name="networld_capture_final_email"
+                type="Networld\Debug\Plugin\CaptureFinalEmail"
+                sortOrder="10"/>
+    </type>
+
+
+    <type name="Magento\Checkout\Model\PaymentInformationManagement">
+        <plugin name="networld_debug_placeorder"
+                type="Networld\Debug\Plugin\CatchOrderPlaceException" />
+    </type>
+
+    <type name="Magento\Framework\Mail\Template\TransportBuilder">
+        <plugin name="networld_log_template_vars"
+                type="Networld\Debug\Plugin\TransportTemplateVarsLogger"
+                sortOrder="5"/>
+    </type>
+
+</config>

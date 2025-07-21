@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!-- File: app/code/Networld/Debug/etc/module.xml -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Networld_Debug" setup_version="1.0.1">
+        <sequence>
+            <!-- Depends on Magento_Sales for order-related features -->
+            <module name="Magento_Sales"/>
+        </sequence>
+    </module>
+</config>
